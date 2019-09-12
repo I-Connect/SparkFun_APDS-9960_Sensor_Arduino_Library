@@ -478,6 +478,13 @@ int SparkFun_APDS9960::readGesture()
 
   /* Keep looping as long as gesture data is valid */
   while(1) {
+    //Timeout to prevent while to run indefinetely when there remains input available
+    if (timeOut <100){
+      timeOut++;
+    }
+    else{
+      return ERROR;
+    }
 
     /* Wait some time to collect next batch of FIFO data */
     delay(FIFO_PAUSE_TIME);
