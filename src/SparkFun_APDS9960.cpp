@@ -477,7 +477,7 @@ int SparkFun_APDS9960::readGesture()
   }
 
   /* Keep looping as long as gesture data is valid */
-  timeOut = 0;
+  int timeOut = 0;
   while(1) {
     //Timeout to prevent while to run indefinetely when there remains input available
     if (timeOut <100){
