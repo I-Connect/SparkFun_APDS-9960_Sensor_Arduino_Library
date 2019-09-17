@@ -480,7 +480,7 @@ int SparkFun_APDS9960::readGesture()
   int timeOut = 0;
   while(1) {
     //Timeout to prevent while to run indefinetely when there remains input available
-    if (timeOut <100){
+    if (timeOut <30){
       timeOut++;
     }
     else{
