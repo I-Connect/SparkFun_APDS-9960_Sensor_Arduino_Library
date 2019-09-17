@@ -2131,28 +2131,28 @@ bool SparkFun_APDS9960::wireWriteByte(uint8_t val)
 bool SparkFun_APDS9960::wireWriteDataByte(uint8_t reg, uint8_t val){
 
 //  log_d("wireWriteDataByte");
-#ifdef ESP32
-  if( xSemaphoreTake( i2cSemaphore, ( TickType_t ) I2C_SEMAPHORE_TIMEOUT ) == pdTRUE ){
-#endif
+// #ifdef ESP32
+//   if( xSemaphoreTake( i2cSemaphore, ( TickType_t ) I2C_SEMAPHORE_TIMEOUT ) == pdTRUE ){
+// #endif
 //    log_d("wireWriteDataByte take semaphore");
     Wire.beginTransmission(APDS9960_I2C_ADDR);
     Wire.write(reg);
     Wire.write(val);
     if( Wire.endTransmission() != 0 ) {
 //      log_d("wireWriteDataByte give semaphore");
-#ifdef ESP32
-      xSemaphoreGive( i2cSemaphore );
-#endif
+// #ifdef ESP32
+//       xSemaphoreGive( i2cSemaphore );
+// #endif
       return false;
     }
 //    log_d("wireWriteDataByte give semaphore");
-#ifdef ESP32
-    xSemaphoreGive( i2cSemaphore );
-  }
-  else{
-    log_e("Unable to take i2cSemaphore");
-  }
-#endif
+// #ifdef ESP32
+//     xSemaphoreGive( i2cSemaphore );
+//   }
+//   else{
+//     log_e("Unable to take i2cSemaphore");
+//   }
+// #endif
   return true;
 }
 
@@ -2169,10 +2169,10 @@ bool SparkFun_APDS9960::wireWriteDataBlock(  uint8_t reg,
     unsigned int len)
 {
   unsigned int i;
-#ifdef ESP32
-  if( xSemaphoreTake( i2cSemaphore, ( TickType_t ) I2C_SEMAPHORE_TIMEOUT ) == pdTRUE ){
-//    log_d("wireWriteDataBlock take semaphore");
-#endif
+// #ifdef ESP32
+//   if( xSemaphoreTake( i2cSemaphore, ( TickType_t ) I2C_SEMAPHORE_TIMEOUT ) == pdTRUE ){
+// //    log_d("wireWriteDataBlock take semaphore");
+// #endif
     Wire.beginTransmission(APDS9960_I2C_ADDR);
     Wire.write(reg);
     for(i = 0; i < len; i++) {
@@ -2180,19 +2180,19 @@ bool SparkFun_APDS9960::wireWriteDataBlock(  uint8_t reg,
     }
     if( Wire.endTransmission() != 0 ) {
 //      log_d("wireWriteDataBlock give semaphore");
-#ifdef ESP32
-      xSemaphoreGive( i2cSemaphore );
-#endif
+// #ifdef ESP32
+//       xSemaphoreGive( i2cSemaphore );
+// #endif
       return false;
     }
-#ifdef ESP32
-//    log_d("wireWriteDataBlock give semaphore");
-    xSemaphoreGive( i2cSemaphore );
-  }
-  else{
-    log_e("Unable to take i2cSemaphore");
-  }
-#endif
+// #ifdef ESP32
+// //    log_d("wireWriteDataBlock give semaphore");
+//     xSemaphoreGive( i2cSemaphore );
+//   }
+//   else{
+//     log_e("Unable to take i2cSemaphore");
+//   }
+// #endif
   return true;
 }
 
@@ -2205,16 +2205,16 @@ bool SparkFun_APDS9960::wireWriteDataBlock(  uint8_t reg,
  */
 bool SparkFun_APDS9960::wireReadDataByte(uint8_t reg, uint8_t &val)
 {
-#ifdef ESP32
-  if( xSemaphoreTake( i2cSemaphore, ( TickType_t ) I2C_SEMAPHORE_TIMEOUT ) == pdTRUE ){
-//    log_d("wireReadDataByte take semaphore");
-#endif
+// #ifdef ESP32
+//   if( xSemaphoreTake( i2cSemaphore, ( TickType_t ) I2C_SEMAPHORE_TIMEOUT ) == pdTRUE ){
+// //    log_d("wireReadDataByte take semaphore");
+// #endif
     /* Indicate which register we want to read from */
     if (!wireWriteByte(reg)) {
 //      log_d("wireReadDataByte give semaphore");
-#ifdef ESP32
-      xSemaphoreGive( i2cSemaphore );
-#endif
+// #ifdef ESP32
+//       xSemaphoreGive( i2cSemaphore );
+// #endif
       return false;
     }
 
@@ -2223,14 +2223,14 @@ bool SparkFun_APDS9960::wireReadDataByte(uint8_t reg, uint8_t &val)
     while (Wire.available()) {
       val = Wire.read();
     }
-#ifdef ESP32
-//    log_d("wireReadDataByte give semaphore");
-    xSemaphoreGive( i2cSemaphore );
-  }
-  else{
-    log_e("Unable to take i2cSemaphore");
-  }
-#endif
+// #ifdef ESP32
+// //    log_d("wireReadDataByte give semaphore");
+//     xSemaphoreGive( i2cSemaphore );
+//   }
+//   else{
+//     log_e("Unable to take i2cSemaphore");
+//   }
+// #endif
   return true;
 }
 
@@ -2247,16 +2247,16 @@ int SparkFun_APDS9960::wireReadDataBlock(   uint8_t reg,
     unsigned int len)
 {
   unsigned char i = 0;
-#ifdef ESP32
-  if( xSemaphoreTake( i2cSemaphore, ( TickType_t ) I2C_SEMAPHORE_TIMEOUT ) == pdTRUE ){
-//    log_d("wireReadDataBlock take semaphore");
-#endif
+// #ifdef ESP32
+//   if( xSemaphoreTake( i2cSemaphore, ( TickType_t ) I2C_SEMAPHORE_TIMEOUT ) == pdTRUE ){
+// //    log_d("wireReadDataBlock take semaphore");
+// #endif
     /* Indicate which register we want to read from */
     if (!wireWriteByte(reg)) {
 //      log_d("wireReadDataBlock give semaphore");
-#ifdef ESP32
-      xSemaphoreGive( i2cSemaphore );
-#endif
+// #ifdef ESP32
+//       xSemaphoreGive( i2cSemaphore );
+// #endif
       return -1;
     }
 
@@ -2265,21 +2265,21 @@ int SparkFun_APDS9960::wireReadDataBlock(   uint8_t reg,
     while (Wire.available()) {
       if (i >= len) {
 //        log_d("wireReadDataBlock give semaphore");
-#ifdef ESP32
-        xSemaphoreGive( i2cSemaphore );
-#endif
+// #ifdef ESP32
+//         xSemaphoreGive( i2cSemaphore );
+// #endif
         return -1;
       }
       val[i] = Wire.read();
       i++;
     }
-#ifdef ESP32
-//    log_d("wireReadDataBlock give semaphore");
-    xSemaphoreGive( i2cSemaphore );
-  }
-  else{
-    log_e("Unable to take i2cSemaphore");
-  }
-#endif
+// #ifdef ESP32
+// //    log_d("wireReadDataBlock give semaphore");
+//     xSemaphoreGive( i2cSemaphore );
+//   }
+//   else{
+//     log_e("Unable to take i2cSemaphore");
+//   }
+// #endif
   return i;
 }
